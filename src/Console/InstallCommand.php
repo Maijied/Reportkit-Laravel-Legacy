@@ -60,7 +60,7 @@ class InstallCommand extends Command
     protected function getOptions()
     {
         return array(
-            array('publish-assets', null, InputOption::VALUE_NONE, 'Copy @reportkit/ui CSS/JS into public/css|js/reportkit/'),
+            array('publish-assets', null, InputOption::VALUE_NONE, 'Copy @lorapok-labs/reportkit-ui CSS/JS into public/css|js/reportkit/'),
             array('with-config', null, InputOption::VALUE_NONE, 'Publish config/reportkit.php into the host app'),
             array('force', 'f', InputOption::VALUE_NONE, 'Overwrite existing published config'),
         );
@@ -162,7 +162,7 @@ class InstallCommand extends Command
         }
 
         if (!$root) {
-            $this->warn('UI assets package not found locally — copy from https://github.com/Maijied/Reportkit-UI or npm @reportkit/ui');
+            $this->warn('UI assets package not found locally — copy from https://github.com/Maijied/Reportkit-UI or npm @lorapok-labs/reportkit-ui');
             return;
         }
 

@@ -83,7 +83,7 @@ sequenceDiagram
 - PHP **5.6 – 7.4**
 - `reportkit/core` (beta channel allowed)
 - Laravel **4.1 – 5.4** host
-- `@reportkit/ui` assets copied into public
+- `@lorapok-labs/reportkit-ui` assets copied into public
 
 ## Install
 
@@ -159,7 +159,7 @@ $rows = $source->getRows($filters); // merged + deduped + sorted
 | `reportkit/core` | [Reportkit-Core](https://github.com/Maijied/Reportkit-Core) |
 | `reportkit/laravel-legacy` | This repository |
 | `reportkit/laravel` | [Reportkit-Laravel](https://github.com/Maijied/Reportkit-Laravel) (5.5 → 13) |
-| `@reportkit/ui` | [Reportkit-UI](https://github.com/Maijied/Reportkit-UI) |
+| `@lorapok-labs/reportkit-ui` | [Reportkit-UI](https://github.com/Maijied/Reportkit-UI) |
 
 ## Author
 

@@ -30,7 +30,7 @@ In `app/config/app.php`:
 php artisan reportkit:install --with-config --publish-assets
 ```
 
-This copies `@reportkit/ui` CSS/JS into `public/css|js/reportkit/` when the UI package is available locally (or follow the GitHub copy steps below).
+This copies `@lorapok-labs/reportkit-ui` CSS/JS into `public/css|js/reportkit/` when the UI package is available locally (or follow the GitHub copy steps below).
 
 Manual fallback from https://github.com/Maijied/Reportkit-UI :
 
