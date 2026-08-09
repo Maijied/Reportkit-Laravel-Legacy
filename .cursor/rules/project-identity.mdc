@@ -1,0 +1,12 @@
+---
+description: ReportKit Laravel Legacy identity
+alwaysApply: true
+---
+
+# reportkit/laravel-legacy
+
+Canonical remote: https://github.com/Maijied/Reportkit-Laravel-Legacy.git
+
+Author: Mohammad Maizied Hasan Majumder \<mdshuvo40@gmail.com\>  
+Target: Laravel 4.1–5.4, PHP 5.6–7.4  
+Do not push to Shohoz bus remotes unless asked. No Cursor commit trailers.

@@ -1,0 +1,54 @@
+@extends('public.admin_master')
+
+@section('style')
+<link rel="stylesheet" href="{{ asset('css/reportkit/reportkit.css') }}">
+@stop
+
+@section('content')
+@include('reportkit::layouts.report')
+
+@section('reportkit.filters')
+<form method="get" id="search-pan" class="rk-filter-pan search-pan">
+    <div class="row">
+        <div class="col-md-3">
+            <label>Start Date</label>
+            <input type="text" name="start_date" class="form-control" value="{{ Input::get('start_date') }}">
+        </div>
+        <div class="col-md-3">
+            <label>End Date</label>
+            <input type="text" name="end_date" class="form-control" value="{{ Input::get('end_date') }}">
+        </div>
+        <div class="col-md-3">
+            <label>&nbsp;</label>
+            <button type="submit" class="btn btn-success btn-block">Generate</button>
+        </div>
+    </div>
+</form>
+@stop
+
+@section('reportkit.results')
+<div class="rk-panel">
+    <div class="rk-panel-head">
+        <h3 class="rk-panel-title">Results</h3>
+        <div class="rk-panel-toolbar"></div>
+    </div>
+    <div class="rk-panel-body">
+        <div class="rk-table-x">
+            <table id="{{slug}}Table" class="table table-bordered table-hover rk-table text-center" width="100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+@stop
+@stop
+
+@section('script')
+<script src="{{ asset('js/reportkit/reportkit.js') }}"></script>
+<script src="{{ asset('js/reports/{{slug}}.js') }}"></script>
+@stop

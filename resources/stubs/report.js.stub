@@ -1,0 +1,25 @@
+(function (window, $) {
+    'use strict';
+    if (!window.ReportKit || !$) {
+        return;
+    }
+    ReportKit.syncLoader.bindForm('#search-pan');
+    if ($.fn.dataTable) {
+        ReportKit.table.mount('#{{slug}}Table', {
+            serverSide: true,
+            deferLoading: 0,
+            ajax: {
+                url: '/{{route}}-data',
+                data: function (d) {
+                    $('#search-pan').serializeArray().forEach(function (item) {
+                        d[item.name] = item.value;
+                    });
+                }
+            },
+            columns: [
+                { data: 'id' },
+                { data: 'name' }
+            ]
+        });
+    }
+}(window, window.jQuery));
