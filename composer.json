@@ -24,7 +24,7 @@
     ],
     "require": {
         "php": ">=5.6.0",
-        "reportkit/core": "0.1.*|dev-main"
+        "reportkit/core": "^0.1@beta || ^0.1 || 0.1.* || dev-main"
     },
     "autoload": {
         "psr-4": {
