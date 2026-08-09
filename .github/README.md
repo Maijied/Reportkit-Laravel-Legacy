@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Maijied/Reportkit-Laravel-Legacy/main/assets/reportkit-logo.png" alt="ReportKit for Laravel (Legacy)" width="160">
+  <img src="https://raw.githubusercontent.com/Maijied/Reportkit-Laravel-Legacy/main/assets/reportkit-logo.png" alt="ReportKit for Laravel (Legacy)" width="168">
 </p>
 
-<h1 align="center">ReportKit for Laravel (Legacy)</h1>
+<h1 align="center">ReportKit&nbsp;for&nbsp;Laravel&nbsp;(Legacy)</h1>
 
 <p align="center"><strong>The same multi-database reporting engine — for Laravel 4.1 → 5.4.</strong></p>
 
@@ -11,16 +11,18 @@
   <a href="https://packagist.org/packages/reportkit/laravel-legacy"><img alt="Downloads" src="https://img.shields.io/packagist/dt/reportkit/laravel-legacy?color=0b7a4b"></a>
   <img alt="PHP" src="https://img.shields.io/badge/php-5.6%20%E2%80%93%207.4-777bb4">
   <img alt="Laravel" src="https://img.shields.io/badge/laravel-4.1%20%E2%80%93%205.4-ff2d20">
-  <a href="https://packagist.org/packages/reportkit/laravel-legacy"><img alt="License" src="https://img.shields.io/packagist/l/reportkit/laravel-legacy?color=0b7a4b"></a>
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/packagist/l/reportkit/laravel-legacy?color=0b7a4b"></a>
 </p>
 
-> Classic Laravel adapter for [ReportKit Core](https://github.com/Maijied/Reportkit-Core). Same engine and Artisan DX — tuned for pre-auto-discovery Laravel and PHP 5.6.
->
-> **Website & docs:** https://reportkit.lorapok.tech · **Part of the Lorapok Labs ecosystem.**
->
-> For Laravel **5.5 → 13**, use [`reportkit/laravel`](https://github.com/Maijied/Reportkit-Laravel).
+<p align="center">
+  <a href="https://reportkit.lorapok.tech">Website &amp; Docs</a> ·
+  <a href="docs/INSTALL.md">Install guide</a> ·
+  <a href="https://github.com/Maijied/Reportkit-Laravel">Laravel 5.5 → 13</a>
+</p>
 
-> A diagram-rich version of this README (with Mermaid) is shown on the [GitHub repository page](https://github.com/Maijied/Reportkit-Laravel-Legacy).
+> **Part of the Lorapok Labs ecosystem.** Classic Laravel adapter for [ReportKit Core](https://github.com/Maijied/Reportkit-Core). Same engine, same Artisan DX — tuned for pre-auto-discovery Laravel and PHP 5.6.
+
+---
 
 ## What you get
 
@@ -29,6 +31,47 @@
 - `php artisan reportkit:make` — full-stack stubs (definition, repository, service, controller, blade, JS, test).
 - CAS Blade partials under `reportkit::` and opt-in `ReportKit::routes()`.
 - Never modifies your existing reports.
+
+## Architecture
+
+```mermaid
+graph LR
+  subgraph host ["Laravel 4.1-5.4 host"]
+    Prov["ReportKitServiceProvider"]
+    Fac["Facades/ReportKit"]
+    Defs["app/Reports/*.php"]
+    Ctrl["*ReportController"]
+    Views["reportkit:: Blade"]
+  end
+  Core["reportkit/core"]
+  UI["@reportkit/ui assets"]
+  Prov --> Core
+  Defs --> Core
+  Ctrl --> Core
+  Fac --> Prov
+  Views --> UI
+```
+
+## DataTables request flow
+
+```mermaid
+sequenceDiagram
+  participant B as Browser
+  participant R as Domain routes
+  participant C as ReportController
+  participant S as MergedRowSource (live + archive)
+  participant K as reportkit/core
+  B->>R: GET admin/demo-report
+  R->>C: index
+  C-->>B: Blade + reportkit UI
+  B->>R: GET admin/demo-report/data
+  R->>C: data
+  C->>S: rows from each connection
+  C->>K: PseudoPaginator + DataTableResponder
+  K-->>B: DataTables JSON
+```
+
+---
 
 ## Requirements
 
@@ -43,7 +86,8 @@
 composer require reportkit/laravel-legacy
 ```
 
-Install from Git (VCS):
+<details>
+<summary>Install from Git (VCS)</summary>
 
 ```json
 {
@@ -57,6 +101,8 @@ Install from Git (VCS):
   }
 }
 ```
+
+</details>
 
 Register in `app/config/app.php` (Laravel 4.1 style):
 
@@ -99,22 +145,7 @@ $source->dedupeBy('id')->orderBy('created_at', 'desc');
 $rows = $source->getRows($filters); // merged + deduped + sorted
 ```
 
-## Scaffold a NEW report
-
-```bash
-php artisan reportkit:make Demo --route=admin/demo-report --preset=hybrid --dry-run
-php artisan reportkit:make Demo --route=admin/demo-report --preset=hybrid \
-  --layout=layouts.master \
-  --flags=datatables,sync,async_prepare,kpi,excel,csv,pdf
-composer dump-autoload
-```
-
-Add routes manually in your domain route file (or call `ReportKit::routes()` when `routes.enabled` is true):
-
-```php
-Route::get('admin/demo-report', 'DemoReportController@index');
-Route::get('admin/demo-report/data', 'DemoReportController@data');
-```
+---
 
 ## Ecosystem
 
@@ -128,7 +159,7 @@ Route::get('admin/demo-report/data', 'DemoReportController@data');
 ## Author
 
 **Mohammad Maizied Hasan Majumder** · [mdshuvo40@gmail.com](mailto:mdshuvo40@gmail.com)
-Founder & Principal Engineer at Lorapok Labs · Senior Software Engineer @ Shohoz Ltd
+Founder &amp; Principal Engineer at **Lorapok Labs** · Senior Software Engineer @ **Shohoz Ltd**
 
 ## License
 
