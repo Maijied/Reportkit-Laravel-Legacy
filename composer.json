@@ -1,15 +1,19 @@
 {
     "name": "reportkit/laravel-legacy",
-    "description": "Laravel 4.1–5.4 adapter for ReportKit (provider, Blade CAS pack, reportkit:make).",
+    "description": "Laravel 4.1\u20135.4 adapter for ReportKit (provider, Blade CAS pack, reportkit:make).",
     "type": "library",
-    "version": "0.1.0",
     "license": "MIT",
     "homepage": "https://github.com/Maijied/Reportkit-Laravel-Legacy",
     "support": {
         "issues": "https://github.com/Maijied/Reportkit-Laravel-Legacy/issues",
         "source": "https://github.com/Maijied/Reportkit-Laravel-Legacy"
     },
-    "keywords": ["laravel", "reportkit", "laravel4", "laravel5"],
+    "keywords": [
+        "laravel",
+        "reportkit",
+        "laravel4",
+        "laravel5"
+    ],
     "authors": [
         {
             "name": "Mohammad Maizied Hasan Majumder",
@@ -28,5 +32,10 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "extra": {
+        "branch-alias": {
+            "dev-main": "0.1.x-dev"
+        }
+    }
 }

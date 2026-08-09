@@ -1,5 +1,8 @@
 # Install ReportKit on Laravel 4.1–5.4
 
+> Site docs: https://reportkit.lorapok.tech/docs/0.1/adapters/laravel-legacy
+
+
 ## 1. Composer
 
 ```bash
@@ -21,9 +24,15 @@ In `app/config/app.php`:
 'ReportKit' => 'ReportKit\\Laravel\\Legacy\\Facades\\ReportKit',
 ```
 
-## 3. UI assets
+## 3. UI assets + config
 
-From https://github.com/Maijied/Reportkit-UI :
+```bash
+php artisan reportkit:install --with-config --publish-assets
+```
+
+This copies `@reportkit/ui` CSS/JS into `public/css|js/reportkit/` when the UI package is available locally (or follow the GitHub copy steps below).
+
+Manual fallback from https://github.com/Maijied/Reportkit-UI :
 
 ```bash
 mkdir -p public/css/reportkit public/js/reportkit
@@ -36,6 +45,8 @@ mkdir -p public/css/reportkit public/js/reportkit
 
 ```bash
 php artisan reportkit:install
+# or with publish:
+php artisan reportkit:install --with-config --publish-assets
 ```
 
 ## 5. Scaffold a NEW report only

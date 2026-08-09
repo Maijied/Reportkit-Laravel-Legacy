@@ -2,6 +2,9 @@
 
 namespace ReportKit\Laravel\Legacy;
 
+use ReportKit\Core\Source\MergedRowSource;
+use ReportKit\Laravel\Legacy\Source\ConnectionRowSource;
+
 use ReportKit\Core\Report\Report as CoreReport;
 use ReportKit\Core\Report\ReportRegistry;
 
@@ -43,6 +46,30 @@ class ReportKitManager
      *
      * @return array
      */
+
+    /**
+     * @param string $connection
+     * @param callable $callback
+     * @param string|null $label
+     * @return ConnectionRowSource
+     */
+    public function connection($connection, $callback, $label = null)
+    {
+        return new ConnectionRowSource($connection, $callback, null, $label);
+    }
+
+    /**
+     * @param array $sources
+     * @param string|null $dedupeKey
+     * @param string|null $orderBy
+     * @param string $direction
+     * @return MergedRowSource
+     */
+    public function merged(array $sources, $dedupeKey = null, $orderBy = null, $direction = 'asc')
+    {
+        return new MergedRowSource($sources, $dedupeKey, $orderBy, $direction);
+    }
+
     public function routes()
     {
         ReportKitServiceProvider::registerRoutes();

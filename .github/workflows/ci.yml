@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        php: ['7.4', '8.1']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+      - run: composer validate --no-check-publish
+      - name: Syntax check
+        run: find src -name '*.php' -print0 | xargs -0 -n1 php -l
