@@ -7,11 +7,16 @@
 <p align="center"><strong>The same multi-database reporting engine — for Laravel 4.1 → 5.4.</strong></p>
 
 <p align="center">
-  <a href="https://packagist.org/packages/reportkit/laravel-legacy"><img alt="Packagist Version" src="https://img.shields.io/packagist/v/reportkit/laravel-legacy?include_prereleases&label=packagist&color=0b7a4b"></a>
-  <a href="https://packagist.org/packages/reportkit/laravel-legacy"><img alt="Downloads" src="https://img.shields.io/packagist/dt/reportkit/laravel-legacy?color=0b7a4b"></a>
-  <img alt="PHP" src="https://img.shields.io/badge/php-5.6%20%E2%80%93%207.4-777bb4">
-  <img alt="Laravel" src="https://img.shields.io/badge/laravel-4.1%20%E2%80%93%205.4-ff2d20">
-  <a href="LICENSE"><img alt="License" src="https://img.shields.io/packagist/l/reportkit/laravel-legacy?color=0b7a4b"></a>
+  <img src="https://hits.sh/reportkit.lorapok.tech.svg?view=today-total&style=flat-square&label=visitors&color=0b7a4b&labelColor=08130f" alt="Visitor Count" />
+  <a href="https://packagist.org/packages/reportkit/laravel-legacy"><img src="https://img.shields.io/packagist/v/reportkit/laravel-legacy?include_prereleases&style=flat-square&color=0b7a4b&labelColor=08130f" alt="Packagist version" /></a>
+  <a href="https://packagist.org/packages/reportkit/laravel-legacy"><img src="https://img.shields.io/packagist/dt/reportkit/laravel-legacy?style=flat-square&color=34c98a&labelColor=08130f" alt="Packagist downloads" /></a>
+  <img src="https://img.shields.io/badge/php-5.6%20%E2%80%93%207.4-777bb4?style=flat-square&labelColor=08130f" alt="PHP" />
+  <img src="https://img.shields.io/badge/laravel-4.1%20%E2%80%93%205.4-ff2d20?style=flat-square&labelColor=08130f" alt="Laravel" />
+  <a href="LICENSE"><img src="https://img.shields.io/packagist/l/reportkit/laravel-legacy?style=flat-square&color=0b7a4b&labelColor=08130f" alt="License" /></a>
+</p>
+
+<p align="center">
+  <a href="https://reportkit.lorapok.tech"><img src="https://img.shields.io/badge/live-reportkit.lorapok.tech-0b7a4b?style=flat-square&labelColor=08130f" alt="Website" /></a>
 </p>
 
 <p align="center">
@@ -35,16 +40,16 @@
 ## Architecture
 
 ```mermaid
-graph LR
-  subgraph host ["Laravel 4.1-5.4 host"]
-    Prov["ReportKitServiceProvider"]
-    Fac["Facades/ReportKit"]
-    Defs["app/Reports/*.php"]
-    Ctrl["*ReportController"]
-    Views["reportkit:: Blade"]
+flowchart LR
+  subgraph host [Laravel 4.1 to 5.4 host]
+    Prov[ServiceProvider]
+    Fac[ReportKit facade]
+    Defs[Report definitions]
+    Ctrl[ReportController]
+    Views[Blade views]
   end
-  Core["reportkit/core"]
-  UI["@reportkit/ui assets"]
+  Core[reportkit core]
+  UI[reportkit-ui assets]
   Prov --> Core
   Defs --> Core
   Ctrl --> Core
@@ -59,15 +64,15 @@ sequenceDiagram
   participant B as Browser
   participant R as Domain routes
   participant C as ReportController
-  participant S as MergedRowSource (live + archive)
-  participant K as reportkit/core
-  B->>R: GET admin/demo-report
+  participant S as MergedRowSource
+  participant K as reportkit core
+  B->>R: GET demo report page
   R->>C: index
-  C-->>B: Blade + reportkit UI
-  B->>R: GET admin/demo-report/data
-  R->>C: data
+  C-->>B: Blade and UI assets
+  B->>R: GET demo report data
+  R->>C: data request
   C->>S: rows from each connection
-  C->>K: PseudoPaginator + DataTableResponder
+  C->>K: paginate and respond
   K-->>B: DataTables JSON
 ```
 
