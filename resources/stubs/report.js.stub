@@ -9,7 +9,7 @@
             serverSide: true,
             deferLoading: 0,
             ajax: {
-                url: '/{{route}}-data',
+                url: '/{{route}}/data',
                 data: function (d) {
                     $('#search-pan').serializeArray().forEach(function (item) {
                         d[item.name] = item.value;
