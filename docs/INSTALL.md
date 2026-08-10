@@ -9,10 +9,9 @@
 composer require reportkit/core reportkit/laravel-legacy
 ```
 
-Or VCS / path repositories pointing at:
+Or VCS monorepo (single clone):
 
 - https://github.com/Maijied/Reportkit-Core.git
-- https://github.com/Maijied/Reportkit-Laravel-Legacy.git
 
 ## 2. Provider + alias
 
@@ -32,7 +31,7 @@ php artisan reportkit:install --with-config --publish-assets
 
 This copies `@lorapok-labs/reportkit-ui` CSS/JS into `public/css|js/reportkit/` when the UI package is available locally (or follow the GitHub copy steps below).
 
-Manual fallback from https://github.com/Maijied/Reportkit-UI :
+Manual fallback from [Reportkit-Core/reportkit-ui](https://github.com/Maijied/Reportkit-Core/tree/main/reportkit-ui):
 
 ```bash
 mkdir -p public/css/reportkit public/js/reportkit
