@@ -1,12 +1,12 @@
 > Plain-text overview for Packagist (no Mermaid). GitHub renders the full diagram version in [README.md](README.md).
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Maijied/Reportkit-Core/main/brand/png/reportkit-logo-1200.png" alt="ReportKit for Laravel (Legacy)" width="160">
+  <img src="https://raw.githubusercontent.com/Maijied/Reportkit-Laravel-Legacy/main/assets/reportkit-logo.png" alt="ReportKit for Laravel (Legacy)" width="160">
 </p>
 
 <h1 align="center">ReportKit for Laravel (Legacy)</h1>
 
-<p align="center"><strong>Multi-database report engine · Laravel 4.1 → all supported</strong></p>
+<p align="center"><strong>The same multi-database reporting engine — for Laravel 4.1 → 5.4.</strong></p>
 
 <p align="center">
   <a href="https://packagist.org/packages/reportkit/laravel-legacy"><img alt="Packagist Version" src="https://img.shields.io/packagist/v/reportkit/laravel-legacy?include_prereleases&label=packagist&color=0b7a4b"></a>
