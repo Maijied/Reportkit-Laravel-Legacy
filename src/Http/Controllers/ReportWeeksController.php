@@ -1,39 +1,33 @@
 <?php
 
+/**
+ * Lorapok ReportKit
+ * Copyright (c) 2026 Lorapok Labs (https://lorapok.tech)
+ * Licensed under the Lorapok Non-Commercial License 1.0 (Lorapok-NCL-1.0)
+ *
+ * ReportWeeksController — Opt-in weeks / rows / trace endpoints for async_prepare (Laravel 4.1–5.4).
+ */
+
 namespace ReportKit\Laravel\Legacy\Http\Controllers;
 
-use ReportKit\Core\Contracts\RowSource;
-use ReportKit\Core\Filter\FilterValidator;
-use ReportKit\Core\Report\ReportRegistry;
+use ReportKit\Core\Http\AjaxResponse;
+use ReportKit\Core\Http\HandlesReportWeeks;
+use ReportKit\Core\Settings\ReportkitConfig;
 
 /**
  * Opt-in weeks / rows / trace endpoints for async_prepare (Laravel 4.1–5.4).
  */
 class ReportWeeksController
 {
+    use HandlesReportWeeks;
+
     /**
      * @param string $slug
      * @return mixed
      */
     public function weeks($slug)
     {
-        $service = $this->resolve($slug);
-
-        if (!is_object($service) || $this->isJsonResponse($service)) {
-            return $service;
-        }
-
-        $inputs = \Input::all();
-        $maxMonths = (int) $this->configValue('reportkit.date.max_months', 6);
-        $error = (new FilterValidator())->validateDateAndOptionalWeek($inputs, $maxMonths);
-
-        if ($error) {
-            return \Response::json(array('error' => $error), 422);
-        }
-
-        $weeks = method_exists($service, 'getWeeks') ? $service->getWeeks($inputs) : array();
-
-        return \Response::json(array('weeks' => is_array($weeks) ? $weeks : array()));
+        return $this->respond($this->reportWeeksPayload($slug, \Input::all(), $this->config()));
     }
 
     /**
@@ -42,26 +36,7 @@ class ReportWeeksController
      */
     public function rows($slug)
     {
-        $service = $this->resolve($slug);
-
-        if (!is_object($service) || $this->isJsonResponse($service)) {
-            return $service;
-        }
-
-        $inputs = \Input::all();
-        $maxMonths = (int) $this->configValue('reportkit.date.max_months', 6);
-        $error = (new FilterValidator())->validateDateAndOptionalWeek($inputs, $maxMonths);
-
-        if ($error) {
-            return \Response::json(array('error' => $error), 422);
-        }
-
-        $rows = method_exists($service, 'getRows') ? $service->getRows($inputs) : array();
-
-        return \Response::json(array(
-            'rows' => is_array($rows) ? array_values($rows) : array(),
-            'count' => is_array($rows) ? count($rows) : 0,
-        ));
+        return $this->respond($this->reportRowsPayload($slug, \Input::all(), $this->config()));
     }
 
     /**
@@ -70,58 +45,28 @@ class ReportWeeksController
      */
     public function trace($slug)
     {
-        if (!$this->configValue('reportkit.routes.trace', false)) {
-            return \Response::json(array('error' => 'Trace disabled.'), 404);
-        }
+        $enabled = (bool) $this->configValue('reportkit.routes.trace', false);
 
-        $service = $this->resolve($slug);
-
-        if (!is_object($service) || $this->isJsonResponse($service)) {
-            return $service;
-        }
-
-        $inputs = \Input::all();
-        $rows = method_exists($service, 'getRows') ? $service->getRows($inputs) : array();
-        $trace = method_exists($service, 'getTrace') ? $service->getTrace() : array();
-
-        return \Response::json(array(
-            'count' => is_array($rows) ? count($rows) : 0,
-            'trace' => $trace,
-        ));
+        return $this->respond($this->reportTracePayload($slug, \Input::all(), $this->config(), $enabled));
     }
 
     /**
-     * @param string $slug
-     * @return object|mixed
+     * @param array $payload
+     * @return mixed
      */
-    protected function resolve($slug)
+    protected function respond(array $payload)
     {
-        $definition = ReportRegistry::get($slug);
+        $status = AjaxResponse::status($payload);
+        unset($payload['_status']);
 
-        if (!$definition || empty($definition->serviceClass)) {
-            return \Response::json(array('error' => 'Unknown report.'), 404);
-        }
-
-        $serviceClass = $definition->serviceClass;
-
-        if (!class_exists($serviceClass)) {
-            return \Response::json(array('error' => 'Report service missing.'), 500);
-        }
-
-        $service = $this->resolveService($serviceClass);
-
-        if (!$service instanceof RowSource && !method_exists($service, 'getRows')) {
-            return \Response::json(array('error' => 'Report service invalid.'), 500);
-        }
-
-        return $service;
+        return \Response::json($payload, $status);
     }
 
     /**
      * @param string $serviceClass
      * @return object
      */
-    protected function resolveService($serviceClass)
+    protected function makeReportService($serviceClass)
     {
         if (function_exists('app')) {
             try {
@@ -135,15 +80,13 @@ class ReportWeeksController
     }
 
     /**
-     * @param mixed $value
-     * @return bool
+     * @return array
      */
-    protected function isJsonResponse($value)
+    protected function config()
     {
-        return is_object($value) && (
-            $value instanceof \Illuminate\Http\JsonResponse
-            || (method_exists($value, 'getStatusCode') && method_exists($value, 'getData'))
-        );
+        $configPath = dirname(dirname(dirname(__DIR__))) . '/config/reportkit.php';
+
+        return ReportkitConfig::load(function_exists('app') ? app() : null, $configPath);
     }
 
     /**
