@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Lorapok ReportKit
+ * Copyright (c) 2026 Lorapok Labs (https://lorapok.tech)
+ * Licensed under the Lorapok Non-Commercial License 1.0 (Lorapok-NCL-1.0)
+ *
+ * ReportKitManager — Application binding for the ReportKit facade.
+ */
+
 namespace ReportKit\Laravel\Legacy;
 
 use ReportKit\Core\Source\MergedRowSource;
