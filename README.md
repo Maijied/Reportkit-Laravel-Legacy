@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Maijied/Reportkit-Laravel-Legacy/main/assets/reportkit-logo.png" alt="ReportKit for Laravel (Legacy)" width="168">
+  <img src="https://raw.githubusercontent.com/Maijied/Reportkit-Core/main/brand/png/reportkit-logo-1200.png" alt="ReportKit for Laravel (Legacy)" width="168">
 </p>
 
 <h1 align="center">ReportKit&nbsp;for&nbsp;Laravel&nbsp;(Legacy)</h1>
 
-<p align="center"><strong>The same multi-database reporting engine — for Laravel 4.1 → 5.4.</strong></p>
+<p align="center"><strong>Multi-database report engine · Laravel 4.1 → all supported</strong></p>
 
 <p align="center">
   <img src="https://hits.sh/reportkit.lorapok.tech.svg?view=today-total&style=flat-square&label=visitors&color=0b7a4b&labelColor=08130f" alt="Visitor Count" />
@@ -22,6 +22,7 @@
 <p align="center">
   <a href="https://reportkit.lorapok.tech">Website &amp; Docs</a> ·
   <a href="docs/INSTALL.md">Install guide</a> ·
+  <a href="docs/UPGRADE.md">Upgrade</a> ·
   <a href="https://github.com/Maijied/Reportkit-Laravel">Laravel 5.5 → 13</a>
 </p>
 
