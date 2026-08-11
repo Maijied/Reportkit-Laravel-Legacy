@@ -2,7 +2,7 @@
     "name": "reportkit/laravel-legacy",
     "description": "Laravel 4.1\u20135.4 adapter for ReportKit (provider, Blade CAS pack, reportkit:make).",
     "type": "library",
-    "license": "LicenseRef-Lorapok-NCL-1.0",
+    "license": "MIT",
     "homepage": "https://github.com/Maijied/Reportkit-Core/tree/main/reportkit-laravel-legacy",
     "support": {
         "issues": "https://github.com/Maijied/Reportkit-Core/issues",
@@ -36,31 +36,6 @@
     "extra": {
         "branch-alias": {
             "dev-main": "0.1.x-dev"
-        },
-        "reportkit": {
-            "adapter": "laravel-legacy",
-            "laravel": {
-                "min": "4.1",
-                "max": "5.4",
-                "display": "4.1 → 5.4"
-            },
-            "docs": {
-                "install": "https://reportkit.lorapok.tech/docs/0.1/adapters/laravel-legacy"
-            },
-            "install": {
-                "composer_require": [
-                    "reportkit/core",
-                    "reportkit/laravel-legacy"
-                ],
-                "provider": "ReportKit\\Laravel\\Legacy\\ReportKitServiceProvider",
-                "facade_alias": "ReportKit",
-                "facade_class": "ReportKit\\Laravel\\Legacy\\Facades\\ReportKit",
-                "definitions_path": "app/Reports/",
-                "needs_classmap_dump": true,
-                "classmap_note": "L4.1",
-                "scaffold_example": "php artisan reportkit:make Demo --route=admin/demo-report --preset=hybrid --layout=layouts.master",
-                "scaffold_bus_note": "(bus host: --layout=public.admin_master)"
-            }
         }
     }
 }
