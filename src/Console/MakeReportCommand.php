@@ -1,13 +1,5 @@
 <?php
 
-/**
- * Lorapok ReportKit
- * Copyright (c) 2026 Lorapok Labs (https://lorapok.tech)
- * Licensed under the Lorapok Non-Commercial License 1.0 (Lorapok-NCL-1.0)
- *
- * MakeReportCommand — Scaffold a new report stack (definition + repo + service + controller + blade stubs).
- */
-
 namespace ReportKit\Laravel\Legacy\Console;
 
 use Illuminate\Console\Command;
@@ -72,7 +64,7 @@ class MakeReportCommand extends Command
             }
 
             $target = base_path($relative);
-            $stubFile = $this->resolveStub($stubDir, $stubName, $preset);
+            $stubFile = $stubDir . '/' . $stubName;
 
             if (file_exists($target) && !$force) {
                 $this->comment("Skip existing: {$relative}");
@@ -107,9 +99,6 @@ class MakeReportCommand extends Command
         if (!empty($flags['datatables'])) {
             $this->line("  Route::get('{$route}/data', '{$studly}ReportController@data');");
         }
-        if (!empty($flags['async_prepare'])) {
-            $this->line("  Enable reportkit routes: weeks, rows, prepared, browse for slug `{$slug}`");
-        }
         $this->comment('Existing reports were not modified.');
     }
 
@@ -122,44 +111,34 @@ class MakeReportCommand extends Command
     {
         $defaults = array(
             'datatable' => array(
-                'datatables' => true, 'sync' => true, 'async_prepare' => false, 'browse_prepared' => false,
-                'kpi' => true, 'ledger' => false, 'excel' => true, 'csv' => true, 'pdf' => false,
-                'email' => false, 'print' => false, 'howto' => false, 'activity_log' => false,
+                'datatables' => true,
+                'sync' => true,
+                'async_prepare' => false,
+                'kpi' => true,
+                'excel' => true,
+                'csv' => true,
+                'pdf' => false,
+                'email' => false,
             ),
             'prepare' => array(
-                'datatables' => false, 'sync' => false, 'async_prepare' => true, 'browse_prepared' => false,
-                'kpi' => true, 'ledger' => false, 'excel' => true, 'csv' => true, 'pdf' => true,
-                'email' => true, 'print' => false, 'howto' => true, 'activity_log' => true,
+                'datatables' => false,
+                'sync' => false,
+                'async_prepare' => true,
+                'kpi' => true,
+                'excel' => true,
+                'csv' => true,
+                'pdf' => true,
+                'email' => true,
             ),
             'hybrid' => array(
-                'datatables' => true, 'sync' => true, 'async_prepare' => true, 'browse_prepared' => false,
-                'kpi' => true, 'ledger' => false, 'excel' => true, 'csv' => true, 'pdf' => true,
-                'email' => false, 'print' => false, 'howto' => false, 'activity_log' => false,
-            ),
-            'hybrid-export' => array(
-                'datatables' => false, 'sync' => false, 'async_prepare' => true, 'browse_prepared' => false,
-                'kpi' => true, 'ledger' => false, 'excel' => true, 'csv' => true, 'pdf' => true,
-                'email' => true, 'print' => false, 'howto' => true, 'activity_log' => true,
-            ),
-            'hybrid-browse' => array(
-                'datatables' => true, 'sync' => false, 'async_prepare' => true, 'browse_prepared' => true,
-                'kpi' => true, 'ledger' => true, 'excel' => true, 'csv' => true, 'pdf' => true,
-                'email' => false, 'print' => false, 'howto' => true, 'activity_log' => true,
-            ),
-            'ledger-sync' => array(
-                'datatables' => true, 'sync' => true, 'async_prepare' => false, 'browse_prepared' => false,
-                'kpi' => true, 'ledger' => true, 'excel' => true, 'csv' => true, 'pdf' => false,
-                'email' => false, 'print' => true, 'howto' => false, 'activity_log' => false,
-            ),
-            'datatables-sync' => array(
-                'datatables' => true, 'sync' => true, 'async_prepare' => false, 'browse_prepared' => false,
-                'kpi' => true, 'ledger' => false, 'excel' => true, 'csv' => true, 'pdf' => false,
-                'email' => false, 'print' => false, 'howto' => false, 'activity_log' => false,
-            ),
-            'hybrid-kpi' => array(
-                'datatables' => false, 'sync' => false, 'async_prepare' => true, 'browse_prepared' => false,
-                'kpi' => true, 'ledger' => false, 'excel' => false, 'csv' => false, 'pdf' => false,
-                'email' => false, 'print' => false, 'howto' => false, 'activity_log' => true,
+                'datatables' => true,
+                'sync' => true,
+                'async_prepare' => true,
+                'kpi' => true,
+                'excel' => true,
+                'csv' => true,
+                'pdf' => true,
+                'email' => false,
             ),
         );
 
@@ -167,7 +146,7 @@ class MakeReportCommand extends Command
 
         if ($flagsOpt) {
             $requested = array_filter(array_map('trim', explode(',', $flagsOpt)));
-            $all = array('datatables', 'sync', 'async_prepare', 'browse_prepared', 'kpi', 'ledger', 'excel', 'csv', 'pdf', 'email', 'print', 'howto', 'activity_log');
+            $all = array('datatables', 'sync', 'async_prepare', 'kpi', 'excel', 'csv', 'pdf', 'email', 'print', 'howto');
             foreach ($all as $key) {
                 $flags[$key] = in_array($key, $requested, true);
             }
@@ -190,23 +169,6 @@ class MakeReportCommand extends Command
         return implode("\n", $lines);
     }
 
-    /**
-     * @param string $stubDir
-     * @param string $stubName
-     * @param string $preset
-     * @return string
-     */
-    protected function resolveStub($stubDir, $stubName, $preset)
-    {
-        $presetPath = $stubDir . '/' . preg_replace('/\.stub$/', ".{$preset}.stub", $stubName);
-
-        if (file_exists($presetPath)) {
-            return $presetPath;
-        }
-
-        return $stubDir . '/' . $stubName;
-    }
-
     protected function getArguments()
     {
         return array(
@@ -218,7 +180,7 @@ class MakeReportCommand extends Command
     {
         return array(
             array('route', null, InputOption::VALUE_OPTIONAL, 'Route prefix', null),
-            array('preset', null, InputOption::VALUE_OPTIONAL, 'datatable|prepare|hybrid|hybrid-browse|ledger-sync|hybrid-export|datatables-sync|hybrid-kpi', 'hybrid'),
+            array('preset', null, InputOption::VALUE_OPTIONAL, 'datatable|prepare|hybrid', 'hybrid'),
             array('layout', null, InputOption::VALUE_OPTIONAL, 'Blade layout to @extends', 'layouts.master'),
             array('flags', null, InputOption::VALUE_OPTIONAL, 'Comma list overriding preset', null),
             array('force', null, InputOption::VALUE_NONE, 'Overwrite existing files'),

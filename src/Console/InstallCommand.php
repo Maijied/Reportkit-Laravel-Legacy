@@ -1,41 +1,22 @@
 <?php
 
-/**
- * Lorapok ReportKit
- * Copyright (c) 2026 Lorapok Labs (https://lorapok.tech)
- * Licensed under the Lorapok Non-Commercial License 1.0 (Lorapok-NCL-1.0)
- *
- * InstallCommand — One-time install helper — metadata from package composer.json (extra.reportkit).
- */
-
 namespace ReportKit\Laravel\Legacy\Console;
 
 use Illuminate\Console\Command;
-use ReportKit\Core\Support\HostRuntime;
-use ReportKit\Core\Support\PackageManifest;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
- * One-time install helper — metadata from package composer.json (extra.reportkit).
+ * One-time install helper for Laravel 4.1–5.4 hosts.
  */
 class InstallCommand extends Command
 {
-    /** @var PackageManifest|null */
-    protected $manifestCache;
-
     protected $name = 'reportkit:install';
 
-    public function getDescription()
-    {
-        return $this->manifest()->installCommandDescription();
-    }
+    protected $description = 'Install ReportKit checklist / publish assets & config (Laravel 4.1–5.4)';
 
     public function fire()
     {
-        $manifest = $this->manifest();
-        $hostVersion = HostRuntime::laravelVersion(isset($this->laravel) ? $this->laravel : null);
-
-        $this->info($manifest->installBanner($hostVersion));
+        $this->info('ReportKit install (Laravel 4.1–5.4)');
         $this->line('');
 
         if ($this->option('with-config')) {
@@ -46,39 +27,19 @@ class InstallCommand extends Command
             $this->copyUiAssets();
         }
 
-        $step = 1;
-        $this->line($step++ . '. ' . $manifest->formatComposerRequire());
-        $this->line($step++ . '. Add provider: ' . $manifest->installMeta('provider'));
-        $this->line(
-            $step++ . '. Add alias: '
-            . $manifest->installMeta('facade_alias')
-            . ' => '
-            . $manifest->installMeta('facade_class')
-        );
-        $this->line($step++ . '. php artisan reportkit:install --with-config --publish-assets');
-        $this->line(
-            $step++ . '. Create '
-            . $manifest->installMeta('definitions_path', 'app/Reports/')
-            . ' for Report::define files'
-        );
-        $this->line($step++ . '. Scaffold NEW reports only:');
-        $this->line('   ' . $manifest->installMeta('scaffold_example'));
-        $busNote = $manifest->installMeta('scaffold_bus_note');
-        if ($busNote) {
-            $this->line('   ' . $busNote);
-        }
-        if ($manifest->installMeta('needs_classmap_dump')) {
-            $classmapNote = $manifest->installMeta('classmap_note', 'legacy');
-            $this->line(
-                $step++ . '. composer dump-autoload  (required for '
-                . $classmapNote
-                . ' classmap under app/controllers/admin/Reports/)'
-            );
-        }
-        $this->line($step++ . '. Add the suggested Route::get lines to your domain route file');
-        $this->line($step++ . '. Do NOT migrate existing reports until you are ready');
+        $this->line('1. composer require reportkit/core reportkit/laravel-legacy');
+        $this->line('2. Add provider: ReportKit\\Laravel\\Legacy\\ReportKitServiceProvider');
+        $this->line('3. Add alias: ReportKit => ReportKit\\Laravel\\Legacy\\Facades\\ReportKit');
+        $this->line('4. php artisan reportkit:install --with-config --publish-assets');
+        $this->line('5. Create app/Reports/ for Report::define files');
+        $this->line('6. Scaffold NEW reports only:');
+        $this->line('   php artisan reportkit:make Demo --route=admin/demo-report --preset=hybrid --layout=layouts.master');
+        $this->line('   (bus host: --layout=public.admin_master)');
+        $this->line('7. composer dump-autoload  (required for L4.1 classmap under app/controllers/admin/Reports/)');
+        $this->line('8. Add the suggested Route::get lines to your domain route file');
+        $this->line('9. Do NOT migrate existing reports until you are ready');
         $this->line('');
-        $this->info('Docs: ' . $manifest->docsUrl('install'));
+        $this->info('Docs: https://reportkit.lorapok.tech/docs/0.1/adapters/laravel-legacy');
     }
 
     /**
@@ -103,18 +64,6 @@ class InstallCommand extends Command
             array('with-config', null, InputOption::VALUE_NONE, 'Publish config/reportkit.php into the host app'),
             array('force', 'f', InputOption::VALUE_NONE, 'Overwrite existing published config'),
         );
-    }
-
-    /**
-     * @return PackageManifest
-     */
-    protected function manifest()
-    {
-        if (!$this->manifestCache) {
-            $this->manifestCache = PackageManifest::fromPackageRoot($this->packageRoot());
-        }
-
-        return $this->manifestCache;
     }
 
     /**
@@ -232,21 +181,6 @@ class InstallCommand extends Command
 
             copy($src, $dest);
             $this->line('Published ' . $rel . ' → ' . $dest);
-        }
-
-        $animDir = $public . '/img/reportkit';
-        $packageAnim = $this->packageRoot() . '/assets/animated';
-
-        if (is_dir($packageAnim)) {
-            if (!is_dir($animDir)) {
-                mkdir($animDir, 0755, true);
-            }
-
-            foreach (glob($packageAnim . '/*.gif') as $gif) {
-                $dest = $animDir . '/' . basename($gif);
-                copy($gif, $dest);
-                $this->line('Published animated/' . basename($gif) . ' → ' . $dest);
-            }
         }
     }
 }
