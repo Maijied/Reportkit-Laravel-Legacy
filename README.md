@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Maijied/Reportkit-Laravel-Legacy/main/assets/reportkit-logo.png" alt="ReportKit for Laravel (Legacy)" width="168">
+  <img src="https://raw.githubusercontent.com/Maijied/Reportkit-Core/main/brand/png/reportkit-mark-1024.png" alt="ReportKit for Laravel (Legacy)" width="168">
 </p>
 
 <h1 align="center">ReportKit&nbsp;for&nbsp;Laravel&nbsp;(Legacy)</h1>
 
-<p align="center"><strong>The same multi-database reporting engine — for Laravel 4.1 → 5.4.</strong></p>
+<p align="center"><strong>Multi-database report engine · Laravel 4.1 → all supported</strong></p>
 
 <p align="center">
   <img src="https://hits.sh/reportkit.lorapok.tech.svg?view=today-total&style=flat-square&label=visitors&color=0b7a4b&labelColor=08130f" alt="Visitor Count" />
@@ -22,7 +22,8 @@
 <p align="center">
   <a href="https://reportkit.lorapok.tech">Website &amp; Docs</a> ·
   <a href="docs/INSTALL.md">Install guide</a> ·
-  <a href="https://github.com/Maijied/Reportkit-Laravel">Laravel 5.5 → 13</a>
+  <a href="docs/UPGRADE.md">Upgrade</a> ·
+  <a href="https://github.com/Maijied/Reportkit-Core/tree/main/reportkit-laravel">Laravel 5.5 → 13</a>
 </p>
 
 > **Part of the Lorapok Labs ecosystem.** Classic Laravel adapter for [ReportKit Core](https://github.com/Maijied/Reportkit-Core). Same engine, same Artisan DX — tuned for pre-auto-discovery Laravel and PHP 5.6.
@@ -98,7 +99,7 @@ composer require reportkit/laravel-legacy
 {
   "repositories": [
     { "type": "vcs", "url": "https://github.com/Maijied/Reportkit-Core.git" },
-    { "type": "vcs", "url": "https://github.com/Maijied/Reportkit-Laravel-Legacy.git" }
+    { "type": "vcs", "url": "https://github.com/Maijied/Reportkit-Core.git" }
   ],
   "require": {
     "reportkit/core": "dev-main",
@@ -158,13 +159,15 @@ $rows = $source->getRows($filters); // merged + deduped + sorted
 |---------|------|
 | `reportkit/core` | [Reportkit-Core](https://github.com/Maijied/Reportkit-Core) |
 | `reportkit/laravel-legacy` | This repository |
-| `reportkit/laravel` | [Reportkit-Laravel](https://github.com/Maijied/Reportkit-Laravel) (5.5 → 13) |
-| `@lorapok-labs/reportkit-ui` | [Reportkit-UI](https://github.com/Maijied/Reportkit-UI) |
+| `reportkit/laravel` | [reportkit-laravel/](https://github.com/Maijied/Reportkit-Core/tree/main/reportkit-laravel) (5.5 → 13) |
+| `@lorapok-labs/reportkit-ui` | [reportkit-ui/](https://github.com/Maijied/Reportkit-Core/tree/main/reportkit-ui) |
 
 ## Author
 
-**Mohammad Maizied Hasan Majumder** · [mdshuvo40@gmail.com](mailto:mdshuvo40@gmail.com)
-Founder &amp; Principal Engineer at **Lorapok Labs** · Senior Software Engineer @ **Shohoz Ltd**
+**Mohammad Maizied Hasan Majumder** (Maijied) · Senior Software Engineer @ **Shohoz Ltd** · Founder and Principal Engineer @ **Lorapok Labs**  
+Dhaka, Bangladesh · [mdshuvo40@gmail.com](mailto:mdshuvo40@gmail.com) · [GitHub @Maijied](https://github.com/Maijied)
+
+Full profile: [AUTHORS.md](../AUTHORS.md)
 
 ## License
 

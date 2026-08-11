@@ -1,12 +1,12 @@
 > Plain-text overview for Packagist (no Mermaid). GitHub renders the full diagram version in [README.md](README.md).
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Maijied/Reportkit-Laravel-Legacy/main/assets/reportkit-logo.png" alt="ReportKit for Laravel (Legacy)" width="160">
+  <img src="https://raw.githubusercontent.com/Maijied/Reportkit-Core/main/brand/png/reportkit-mark-1024.png" alt="ReportKit for Laravel (Legacy)" width="160">
 </p>
 
 <h1 align="center">ReportKit for Laravel (Legacy)</h1>
 
-<p align="center"><strong>The same multi-database reporting engine — for Laravel 4.1 → 5.4.</strong></p>
+<p align="center"><strong>Multi-database report engine · Laravel 4.1 → all supported</strong></p>
 
 <p align="center">
   <a href="https://packagist.org/packages/reportkit/laravel-legacy"><img alt="Packagist Version" src="https://img.shields.io/packagist/v/reportkit/laravel-legacy?include_prereleases&label=packagist&color=0b7a4b"></a>
@@ -20,9 +20,9 @@
 >
 > **Website & docs:** https://reportkit.lorapok.tech · **Part of the Lorapok Labs ecosystem.**
 >
-> For Laravel **5.5 → 13**, use [`reportkit/laravel`](https://github.com/Maijied/Reportkit-Laravel).
+> For Laravel **5.5 → 13**, use [`reportkit/laravel`](https://github.com/Maijied/Reportkit-Core/tree/main/reportkit-laravel).
 
-> A diagram-rich version of this README (with Mermaid) is shown on the [GitHub repository page](https://github.com/Maijied/Reportkit-Laravel-Legacy).
+> A diagram-rich version of this README (with Mermaid) is shown on the [monorepo package page](https://github.com/Maijied/Reportkit-Core/tree/main/reportkit-laravel-legacy).
 
 ## What you get
 
@@ -51,7 +51,7 @@ Install from Git (VCS):
 {
   "repositories": [
     { "type": "vcs", "url": "https://github.com/Maijied/Reportkit-Core.git" },
-    { "type": "vcs", "url": "https://github.com/Maijied/Reportkit-Laravel-Legacy.git" }
+    { "type": "vcs", "url": "https://github.com/Maijied/Reportkit-Core.git" }
   ],
   "require": {
     "reportkit/core": "dev-main",
@@ -124,13 +124,13 @@ Route::get('admin/demo-report/data', 'DemoReportController@data');
 |---------|------|
 | `reportkit/core` | [Reportkit-Core](https://github.com/Maijied/Reportkit-Core) |
 | `reportkit/laravel-legacy` | This repository |
-| `reportkit/laravel` | [Reportkit-Laravel](https://github.com/Maijied/Reportkit-Laravel) (5.5 → 13) |
-| `@lorapok-labs/reportkit-ui` | [Reportkit-UI](https://github.com/Maijied/Reportkit-UI) |
+| `reportkit/laravel` | [reportkit-laravel/](https://github.com/Maijied/Reportkit-Core/tree/main/reportkit-laravel) (5.5 → 13) |
+| `@lorapok-labs/reportkit-ui` | [reportkit-ui/](https://github.com/Maijied/Reportkit-Core/tree/main/reportkit-ui) |
 
 ## Author
 
-**Mohammad Maizied Hasan Majumder** · [mdshuvo40@gmail.com](mailto:mdshuvo40@gmail.com)
-Founder & Principal Engineer at Lorapok Labs · Senior Software Engineer @ Shohoz Ltd
+**Mohammad Maizied Hasan Majumder** (Maijied) · Senior Software Engineer @ Shohoz Ltd · Founder and Principal Engineer @ Lorapok Labs  
+Dhaka, Bangladesh · [mdshuvo40@gmail.com](mailto:mdshuvo40@gmail.com) · [GitHub @Maijied](https://github.com/Maijied)
 
 ## License
 

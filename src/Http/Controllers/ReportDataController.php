@@ -1,10 +1,20 @@
 <?php
 
+/**
+ * Lorapok ReportKit
+ * Copyright (c) 2026 Lorapok Labs (https://lorapok.tech)
+ * Licensed under the Lorapok Non-Commercial License 1.0 (Lorapok-NCL-1.0)
+ *
+ * ReportDataController — Opt-in generic DataTables endpoint for a registered report slug (Laravel 4.1–5.4).
+ */
+
 namespace ReportKit\Laravel\Legacy\Http\Controllers;
 
 use ReportKit\Core\Contracts\RowSource;
 use ReportKit\Core\Filter\FilterValidator;
 use ReportKit\Core\Report\ReportRegistry;
+use ReportKit\Core\Settings\ReportkitConfig;
+use ReportKit\Core\Settings\ReportSettingsResolver;
 use ReportKit\Core\Table\DataTableResponder;
 use ReportKit\Core\Table\PseudoPaginator;
 
@@ -34,7 +44,7 @@ class ReportDataController
         $inputs = \Input::all();
 
         if (!empty($inputs['start_date']) || !empty($inputs['end_date'])) {
-            $maxMonths = $this->configValue('reportkit.date.max_months', 6);
+            $maxMonths = $this->maxMonthsForReport($slug);
             $dateError = (new FilterValidator())->validateDateAndOptionalWeek($inputs, (int) $maxMonths);
 
             if ($dateError) {
@@ -135,5 +145,17 @@ class ReportDataController
         }
 
         return $default;
+    }
+
+    /**
+     * @param string $slug
+     * @return int
+     */
+    protected function maxMonthsForReport($slug)
+    {
+        $configPath = dirname(dirname(dirname(__DIR__))) . '/config/reportkit.php';
+        $config = ReportkitConfig::load(function_exists('app') ? app() : null, $configPath);
+
+        return (int) ReportSettingsResolver::get($slug, $config, 'date.max_months', 6);
     }
 }
